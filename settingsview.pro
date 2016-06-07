@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    borderlayout.cpp
+    borderlayout.cpp \
+    sidebaritem.cpp
 
 HEADERS  += mainwindow.h \
-    borderlayout.h
+    borderlayout.h \
+    sidebaritem.h
 
 FORMS    += mainwindow.ui

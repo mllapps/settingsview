@@ -7,16 +7,27 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QSpacerItem>
+#include <QToolButton>
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent)
 {
+
+    QIcon icon("/home/fmueller/sign-check-icon.png");
+
+    QToolButton * btn = new QToolButton;
+    btn->setIcon(icon);
+    btn->setText("Title");
+    btn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    btn->setFixedSize(100, 100);
+    btn->setStyleSheet("QToolButton { color: white; background-color: black;}");
     QVBoxLayout * sidebarLayout = new QVBoxLayout();
     sidebarLayout->addWidget(new QPushButton("General"));
     sidebarLayout->addWidget(new QPushButton("Network"));
     sidebarLayout->addWidget(new QPushButton("Slideshow"));
     sidebarLayout->addWidget(new QPushButton("Privacy"));
     sidebarLayout->addWidget(new QPushButton("Advanced"));
+    sidebarLayout->addWidget(btn);
     sidebarLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Minimum, QSizePolicy::MinimumExpanding));
 
     QWidget * sidebar = new QWidget();
