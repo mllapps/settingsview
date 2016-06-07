@@ -22,3 +22,6 @@ HEADERS  += mainwindow.h \
     sidebaritem.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    default.qrc
