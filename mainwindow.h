@@ -21,7 +21,6 @@ public slots:
 
 private:
     QToolButton * createSidebarButton(const QString& iconPath, const QString& title);
-
     QLabel *createLabel(const QString &text);
     QStackedWidget * _stackedWidget;
 

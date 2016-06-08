@@ -17,12 +17,13 @@ QToolButton * MainWindow::createSidebarButton(const QString& iconPath, const QSt
 
     QToolButton * btn = new QToolButton;
     btn->setIcon(icon);
-    btn->setIconSize(QSize(32, 32));
+    btn->setIconSize(QSize(42, 42));
     btn->setText(title);
     btn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    btn->setFixedSize(100, 100);
+    btn->setFixedSize(76, 76);
     btn->setStyleSheet("QToolButton {color: white; background-color: gray;}");
     btn->setObjectName(title);
+    QObject::connect(btn, SIGNAL(clicked(bool)), this, SLOT(changeCenterWidget(bool)));
 
     return btn;
 }
@@ -30,28 +31,22 @@ QToolButton * MainWindow::createSidebarButton(const QString& iconPath, const QSt
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent)
 {
-    setGeometry(0,0, 700, 620);
-
     QVBoxLayout * sidebarLayout = new QVBoxLayout();
-    QToolButton * btn = createSidebarButton(":/icons/assets/add.svg", "General");
-    QObject::connect(btn, SIGNAL(clicked(bool)), this, SLOT(changeCenterWidget(bool)));
-    sidebarLayout->addWidget(btn);
-
-    QToolButton * btn2 = createSidebarButton(":/icons/assets/cloud.svg", "Network");
-    QObject::connect(btn2, SIGNAL(clicked(bool)), this, SLOT(changeCenterWidget(bool)));
-
-    sidebarLayout->addWidget(btn2);
-
+    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/add.svg", "General"));
+    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/cloud.svg", "Network"));
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/alarm-clock.svg", "Slideshow"));
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/bars.svg", "Privacy"));
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/attachment.svg", "Advanced"));
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/cloud.svg", "Storage"));
     sidebarLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Minimum, QSizePolicy::MinimumExpanding));
+    sidebarLayout->setSpacing(0);
+    sidebarLayout->setMargin(0);
 
     QWidget * sidebar = new QWidget();
     sidebar->setLayout(sidebarLayout);
     sidebar->setObjectName("sidebar");
     sidebar->setStyleSheet("QWidget#sidebar {background-color: gray;} ");
+    sidebar->setMinimumHeight(sidebarLayout->count() * 76);
 
     QTextBrowser *centralWidget = new QTextBrowser;
     centralWidget->setPlainText(tr("General"));
@@ -62,12 +57,13 @@ MainWindow::MainWindow(QWidget *parent) :
     _stackedWidget->addWidget(centralWidget);
     _stackedWidget->addWidget(centralWidget2);
 
-    BorderLayout *layout = new BorderLayout;
+    BorderLayout *layout = new BorderLayout();
     layout->addWidget(_stackedWidget, BorderLayout::Center);
     layout->addWidget(sidebar, BorderLayout::West);
     setLayout(layout);
 
     setWindowTitle(tr("Border Layout"));
+    setGeometry(0,0, 700, sidebar->minimumHeight());
 }
 
 MainWindow::~MainWindow()
