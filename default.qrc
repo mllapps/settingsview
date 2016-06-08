@@ -238,7 +238,6 @@
         <file>assets/scale-protector.svg</file>
         <file>assets/scaling.svg</file>
         <file>assets/scissors.svg</file>
-        <file>assets/settings.svg</file>
         <file>assets/shopping-cart.svg</file>
         <file>assets/shopping-cart-1.svg</file>
         <file>assets/shopping-cart-2.svg</file>
@@ -325,5 +324,6 @@
         <file>assets/wrong-sign.svg</file>
         <file>assets/zoom.svg</file>
         <file>assets/zoom-out.svg</file>
+        <file>assets/settings.svg</file>
     </qresource>
 </RCC>
