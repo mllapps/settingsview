@@ -11,33 +11,21 @@
 #include <QDebug>
 #include <QStackedWidget>
 
-QToolButton * MainWindow::createSidebarButton(const QString& iconPath, const QString& title)
-{
-    QIcon icon(iconPath);
-
-    QToolButton * btn = new QToolButton;
-    btn->setIcon(icon);
-    btn->setIconSize(QSize(42, 42));
-    btn->setText(title);
-    btn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    btn->setFixedSize(76, 76);
-    btn->setStyleSheet("QToolButton {margin: 5px; color: #ededed; background-color: #292929; border: none; font-size: 11px;} QToolButton:hover {color: #2c92ea; border: 2px solid #2c92ea; border-radius: 5px;}");
-    btn->setObjectName(title);
-    QObject::connect(btn, SIGNAL(clicked(bool)), this, SLOT(changeCenterWidget(bool)));
-
-    return btn;
-}
+/*------------------------------------------------------------------------------
+ * CTOR / DTOR
+ *----------------------------------------------------------------------------*/
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent)
 {
+    // Create a layout for the sidebar
     QVBoxLayout * sidebarLayout = new QVBoxLayout();
-    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/settings.svg", "General"));
-    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/wifi.svg", "Network"));
-    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/pictures.svg", "Slideshow"));
-    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/tablet-locked.svg", "Privacy"));
-    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/attachment.svg", "Advanced"));
-    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/cloud.svg", "Storage"));
+    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/settings.svg", tr("General") ));
+    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/wifi.svg", tr("Network") ));
+    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/pictures.svg", tr("Slideshow") ));
+    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/tablet-locked.svg", tr("Privacy") ));
+    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/attachment.svg", tr("Advanced") ));
+    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/cloud.svg", tr("Storage") ));
     sidebarLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Minimum, QSizePolicy::MinimumExpanding));
     sidebarLayout->setSpacing(0);
     sidebarLayout->setMargin(0);
@@ -83,10 +71,12 @@ MainWindow::~MainWindow()
 {
 }
 
+/*------------------------------------------------------------------------------
+ *
+ *----------------------------------------------------------------------------*/
+
 void MainWindow::changeCenterWidget(bool event)
 {
-    qDebug() << "clicked" << QObject::sender()->objectName();
-
     QString sender = QObject::sender()->objectName();
 
     if(sender.compare("General") == 0) {
@@ -102,12 +92,32 @@ void MainWindow::changeCenterWidget(bool event)
     }else if(sender.compare("Storage") == 0) {
         _stackedWidget->setCurrentIndex(5);
     }
-
 }
+
+/*------------------------------------------------------------------------------
+ *
+ *----------------------------------------------------------------------------*/
 
 QLabel *MainWindow::createLabel(const QString &text)
 {
     QLabel *label = new QLabel(text);
     label->setFrameStyle(QFrame::Box | QFrame::Raised);
     return label;
+}
+
+QToolButton * MainWindow::createSidebarButton(const QString& iconPath, const QString& title)
+{
+    QIcon icon(iconPath);
+
+    QToolButton * btn = new QToolButton;
+    btn->setIcon(icon);
+    btn->setIconSize(QSize(42, 42));
+    btn->setText(title);
+    btn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    btn->setFixedSize(76, 76);
+    btn->setStyleSheet("QToolButton {margin: 5px; color: #ededed; background-color: #292929; border: none; font-size: 11px;} QToolButton:hover {border: 2px solid #2c92ea; border-radius: 5px;}");
+    btn->setObjectName(title);
+    QObject::connect(btn, SIGNAL(clicked(bool)), this, SLOT(changeCenterWidget(bool)));
+
+    return btn;
 }

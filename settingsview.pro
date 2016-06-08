@@ -25,3 +25,8 @@ FORMS    += mainwindow.ui
 
 RESOURCES += \
     default.qrc
+
+target.files = settingsview
+target.path = /usr/bin
+
+INSTALLS += target
