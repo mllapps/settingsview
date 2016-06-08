@@ -1,0 +1,20 @@
+QTextBrowser {
+  font-family: Lato;
+  font-weight: 300;
+  font-size: 50px;
+  background-color: #ededed;
+}
+QWidget#sidebar {
+  background-color: #292929;
+}
+QToolButton {
+  margin: 5px;
+  color: #ededed;
+  background-color: #292929;
+  border: none;
+  font-size: 11px;
+}
+QToolButton:hover {
+  border: 2px solid #2c92ea;
+  border-radius: 5px;
+}

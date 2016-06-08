@@ -13,13 +13,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     borderlayout.cpp \
-    sidebaritem.cpp
+    sidebaritem.cpp \
+    settingsview.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     borderlayout.h \
-    sidebaritem.h
+    sidebaritem.h \
+    settingsview.h
 
 FORMS    += mainwindow.ui
 

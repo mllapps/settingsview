@@ -326,4 +326,7 @@
         <file>assets/zoom-out.svg</file>
         <file>assets/settings.svg</file>
     </qresource>
+    <qresource prefix="/styles">
+        <file>styles/default.qss</file>
+    </qresource>
 </RCC>

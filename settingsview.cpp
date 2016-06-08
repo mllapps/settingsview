@@ -1,8 +1,3 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-
-#include "borderlayout.h"
-
 #include <QTextBrowser>
 #include <QLabel>
 #include <QPushButton>
@@ -11,11 +6,18 @@
 #include <QDebug>
 #include <QStackedWidget>
 
+#include "settingsview.h"
+#include "borderlayout.h"
+
 /*------------------------------------------------------------------------------
  * CTOR / DTOR
  *----------------------------------------------------------------------------*/
-
-MainWindow::MainWindow(QWidget *parent) :
+/**
+ * @brief Create a instance of the settings widget
+ *
+ * @param parent
+ */
+SettingsView::SettingsView(QWidget *parent) :
     QWidget(parent)
 {
     // Create a layout for the sidebar
@@ -33,11 +35,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QWidget * sidebar = new QWidget();
     sidebar->setLayout(sidebarLayout);
     sidebar->setObjectName("sidebar");
-    sidebar->setStyleSheet("QWidget#sidebar {background-color: #292929;} ");
     sidebar->setMinimumHeight(sidebarLayout->count() * 76);
 
     QTextBrowser *centralWidget = new QTextBrowser;
-    centralWidget->setPlainText(tr("General"));
+    centralWidget->setText(tr("General"));
     QTextBrowser *centralWidget2 = new QTextBrowser;
     centralWidget2->setPlainText(tr("Network"));
     QTextBrowser *centralWidget3 = new QTextBrowser;
@@ -67,15 +68,22 @@ MainWindow::MainWindow(QWidget *parent) :
     setGeometry(0,0, 700, sidebar->minimumHeight());
 }
 
-MainWindow::~MainWindow()
+/**
+ * @brief Free allocated memory
+ */
+SettingsView::~SettingsView()
 {
 }
 
 /*------------------------------------------------------------------------------
  *
  *----------------------------------------------------------------------------*/
-
-void MainWindow::changeCenterWidget(bool event)
+/**
+ * @brief Slot to change the center widget
+ *
+ * @param event True if touched and false if released.
+ */
+void SettingsView::changeCenterWidget(bool event)
 {
     QString sender = QObject::sender()->objectName();
 
@@ -98,14 +106,15 @@ void MainWindow::changeCenterWidget(bool event)
  *
  *----------------------------------------------------------------------------*/
 
-QLabel *MainWindow::createLabel(const QString &text)
-{
-    QLabel *label = new QLabel(text);
-    label->setFrameStyle(QFrame::Box | QFrame::Raised);
-    return label;
-}
-
-QToolButton * MainWindow::createSidebarButton(const QString& iconPath, const QString& title)
+/**
+ * @brief Create a button for the sidebar
+ *
+ * @param iconPath Path to the icon
+ * @param title Tile to display under the icon
+ *
+ * @return A new instance of a button for the sidebar
+ */
+QToolButton * SettingsView::createSidebarButton(const QString& iconPath, const QString& title)
 {
     QIcon icon(iconPath);
 
@@ -115,7 +124,6 @@ QToolButton * MainWindow::createSidebarButton(const QString& iconPath, const QSt
     btn->setText(title);
     btn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     btn->setFixedSize(76, 76);
-    btn->setStyleSheet("QToolButton {margin: 5px; color: #ededed; background-color: #292929; border: none; font-size: 11px;} QToolButton:hover {border: 2px solid #2c92ea; border-radius: 5px;}");
     btn->setObjectName(title);
     QObject::connect(btn, SIGNAL(clicked(bool)), this, SLOT(changeCenterWidget(bool)));
 

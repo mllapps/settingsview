@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef SETTINGSVIEW_H
+#define SETTINGSVIEW_H
 
 #include <QWidget>
 
@@ -7,13 +7,13 @@ class QLabel;
 class QToolButton;
 class QStackedWidget;
 
-class MainWindow : public QWidget
+class SettingsView : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit SettingsView(QWidget *parent = 0);
+    ~SettingsView();
 
 public slots:
     void changeCenterWidget(bool);
@@ -21,9 +21,8 @@ public slots:
 
 private:
     QToolButton * createSidebarButton(const QString& iconPath, const QString& title);
-    QLabel *createLabel(const QString &text);
     QStackedWidget * _stackedWidget;
 
 };
 
-#endif // MAINWINDOW_H
+#endif // SETTINGSVIEW_H
