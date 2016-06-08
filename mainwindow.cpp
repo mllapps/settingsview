@@ -21,7 +21,7 @@ QToolButton * MainWindow::createSidebarButton(const QString& iconPath, const QSt
     btn->setText(title);
     btn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     btn->setFixedSize(76, 76);
-    btn->setStyleSheet("QToolButton {color: white; background-color: gray;}");
+    btn->setStyleSheet("QToolButton {color: #ededed; background-color: #292929; border: none; font-size: 11px;} QToolButton:hover {color: #2c92ea;}");
     btn->setObjectName(title);
     QObject::connect(btn, SIGNAL(clicked(bool)), this, SLOT(changeCenterWidget(bool)));
 
@@ -32,9 +32,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent)
 {
     QVBoxLayout * sidebarLayout = new QVBoxLayout();
-    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/add.svg", "General"));
-    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/cloud.svg", "Network"));
-    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/alarm-clock.svg", "Slideshow"));
+    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/settings.svg", "General"));
+    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/wifi.svg", "Network"));
+    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/pictures.svg", "Slideshow"));
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/bars.svg", "Privacy"));
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/attachment.svg", "Advanced"));
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/cloud.svg", "Storage"));
@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QWidget * sidebar = new QWidget();
     sidebar->setLayout(sidebarLayout);
     sidebar->setObjectName("sidebar");
-    sidebar->setStyleSheet("QWidget#sidebar {background-color: gray;} ");
+    sidebar->setStyleSheet("QWidget#sidebar {background-color: #292929;} ");
     sidebar->setMinimumHeight(sidebarLayout->count() * 76);
 
     QTextBrowser *centralWidget = new QTextBrowser;
