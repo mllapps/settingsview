@@ -73,8 +73,9 @@ MainWindow::MainWindow(QWidget *parent) :
     layout->addWidget(_stackedWidget, BorderLayout::Center);
     layout->addWidget(sidebar, BorderLayout::West);
     setLayout(layout);
+    layout->setSpacing(0);
 
-    setWindowTitle(tr("Border Layout"));
+    setWindowTitle(tr("Settings"));
     setGeometry(0,0, 700, sidebar->minimumHeight());
 }
 
