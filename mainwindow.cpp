@@ -21,7 +21,7 @@ QToolButton * MainWindow::createSidebarButton(const QString& iconPath, const QSt
     btn->setText(title);
     btn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     btn->setFixedSize(76, 76);
-    btn->setStyleSheet("QToolButton {color: #ededed; background-color: #292929; border: none; font-size: 11px;} QToolButton:hover {color: #2c92ea;}");
+    btn->setStyleSheet("QToolButton {margin: 5px; color: #ededed; background-color: #292929; border: none; font-size: 11px;} QToolButton:hover {color: #2c92ea; border: 2px solid #2c92ea; border-radius: 5px;}");
     btn->setObjectName(title);
     QObject::connect(btn, SIGNAL(clicked(bool)), this, SLOT(changeCenterWidget(bool)));
 
@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/settings.svg", "General"));
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/wifi.svg", "Network"));
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/pictures.svg", "Slideshow"));
-    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/bars.svg", "Privacy"));
+    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/tablet-locked.svg", "Privacy"));
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/attachment.svg", "Advanced"));
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/cloud.svg", "Storage"));
     sidebarLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Minimum, QSizePolicy::MinimumExpanding));
@@ -52,10 +52,22 @@ MainWindow::MainWindow(QWidget *parent) :
     centralWidget->setPlainText(tr("General"));
     QTextBrowser *centralWidget2 = new QTextBrowser;
     centralWidget2->setPlainText(tr("Network"));
+    QTextBrowser *centralWidget3 = new QTextBrowser;
+    centralWidget3->setPlainText(tr("Slideshow"));
+    QTextBrowser *centralWidget4 = new QTextBrowser;
+    centralWidget4->setPlainText(tr("Privacy"));
+    QTextBrowser *centralWidget5 = new QTextBrowser;
+    centralWidget5->setPlainText(tr("Advanced"));
+    QTextBrowser *centralWidget6 = new QTextBrowser;
+    centralWidget6->setPlainText(tr("Storage"));
 
     _stackedWidget = new QStackedWidget;
     _stackedWidget->addWidget(centralWidget);
     _stackedWidget->addWidget(centralWidget2);
+    _stackedWidget->addWidget(centralWidget3);
+    _stackedWidget->addWidget(centralWidget4);
+    _stackedWidget->addWidget(centralWidget5);
+    _stackedWidget->addWidget(centralWidget6);
 
     BorderLayout *layout = new BorderLayout();
     layout->addWidget(_stackedWidget, BorderLayout::Center);
@@ -80,6 +92,14 @@ void MainWindow::changeCenterWidget(bool event)
         _stackedWidget->setCurrentIndex(0);
     }else if(sender.compare("Network") == 0) {
         _stackedWidget->setCurrentIndex(1);
+    }else if(sender.compare("Slideshow") == 0) {
+        _stackedWidget->setCurrentIndex(2);
+    }else if(sender.compare("Privacy") == 0) {
+        _stackedWidget->setCurrentIndex(3);
+    }else if(sender.compare("Advanced") == 0) {
+        _stackedWidget->setCurrentIndex(4);
+    }else if(sender.compare("Storage") == 0) {
+        _stackedWidget->setCurrentIndex(5);
     }
 
 }
