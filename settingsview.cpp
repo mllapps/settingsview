@@ -87,6 +87,8 @@ void SettingsView::changeCenterWidget(bool event)
 {
     QString sender = QObject::sender()->objectName();
 
+    static_cast<QToolButton*>(QObject::sender())->setFocus();
+
     if(sender.compare("General") == 0) {
         _stackedWidget->setCurrentIndex(0);
     }else if(sender.compare("Network") == 0) {

@@ -18,3 +18,7 @@ QToolButton:hover {
   border: 2px solid #2c92ea;
   border-radius: 5px;
 }
+QToolButton:focus {
+  border: 2px solid gray;
+  border-radius: 5px;
+}
