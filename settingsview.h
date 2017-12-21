@@ -11,6 +11,7 @@
 #define SETTINGSVIEW_H
 
 #include <QWidget>
+#include <QMap>
 
 class QLabel;
 class QToolButton;
@@ -35,7 +36,6 @@ private:
     QToolButton * createSidebarButton(const QString& iconPath, const QString& title);
     QStackedWidget * _stackedWidget;
     QToolButton * _activeButton;
-
 };
 
 #endif /* SETTINGSVIEW_H */

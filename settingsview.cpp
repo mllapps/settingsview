@@ -36,7 +36,11 @@ SettingsView::SettingsView(QWidget *parent) :
     /* Create a layout for the sidebar */
     QWidget * sidebar = new QWidget();
     QVBoxLayout * sidebarLayout = new QVBoxLayout();
-    sidebarLayout->addWidget(createSidebarButton(":/icons/assets/settings.svg", tr("General") ));
+    _activeButton = createSidebarButton(":/icons/assets/settings.svg", tr("General"));
+    _activeButton->setChecked(true);
+    sidebarLayout->addWidget(_activeButton);
+
+
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/wifi.svg", tr("Network") ));
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/pictures.svg", tr("Slideshow") ));
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/tablet-locked.svg", tr("Privacy") ));
@@ -62,6 +66,12 @@ SettingsView::SettingsView(QWidget *parent) :
 
     setWindowTitle(tr("Settings"));
     setGeometry(0,0, 700, sidebar->minimumHeight());
+
+    /* Create the first view */
+    QWidget *widget = new QWidget;
+    Ui::GeneralView ui;
+    ui.setupUi(widget);
+    push(widget);
 }
 
 /**
