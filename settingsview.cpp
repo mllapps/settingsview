@@ -19,9 +19,11 @@
  */
 SettingsView::SettingsView(QWidget *parent) :
     QWidget(parent),
+    _stackedWidget(nullptr),
     _activeButton(nullptr)
 {
-    // Create a layout for the sidebar
+    /* Create a layout for the sidebar */
+    QWidget * sidebar = new QWidget();
     QVBoxLayout * sidebarLayout = new QVBoxLayout();
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/settings.svg", tr("General") ));
     sidebarLayout->addWidget(createSidebarButton(":/icons/assets/wifi.svg", tr("Network") ));
@@ -32,33 +34,15 @@ SettingsView::SettingsView(QWidget *parent) :
     sidebarLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Minimum, QSizePolicy::MinimumExpanding));
     sidebarLayout->setSpacing(0);
     sidebarLayout->setMargin(0);
-
-    QWidget * sidebar = new QWidget();
+    /* Add the sidebar layout to the sidebar widget container */
     sidebar->setLayout(sidebarLayout);
     sidebar->setObjectName("sidebar");
     sidebar->setMinimumHeight(sidebarLayout->count() * 76);
 
-    QTextBrowser *centralWidget = new QTextBrowser;
-    centralWidget->setText(tr("General"));
-    QTextBrowser *centralWidget2 = new QTextBrowser;
-    centralWidget2->setPlainText(tr("Network"));
-    QTextBrowser *centralWidget3 = new QTextBrowser;
-    centralWidget3->setPlainText(tr("Slideshow"));
-    QTextBrowser *centralWidget4 = new QTextBrowser;
-    centralWidget4->setPlainText(tr("Privacy"));
-    QTextBrowser *centralWidget5 = new QTextBrowser;
-    centralWidget5->setPlainText(tr("Advanced"));
-    QTextBrowser *centralWidget6 = new QTextBrowser;
-    centralWidget6->setPlainText(tr("Storage"));
-
+    /* Create the stacked widget */
     _stackedWidget = new QStackedWidget;
-    _stackedWidget->addWidget(centralWidget);
-    _stackedWidget->addWidget(centralWidget2);
-    _stackedWidget->addWidget(centralWidget3);
-    _stackedWidget->addWidget(centralWidget4);
-    _stackedWidget->addWidget(centralWidget5);
-    _stackedWidget->addWidget(centralWidget6);
 
+    /* Create the board layout */
     BorderLayout *layout = new BorderLayout();
     layout->addWidget(_stackedWidget, BorderLayout::Center);
     layout->addWidget(sidebar, BorderLayout::West);
@@ -74,6 +58,7 @@ SettingsView::SettingsView(QWidget *parent) :
  */
 SettingsView::~SettingsView()
 {
+    delete _stackedWidget; _stackedWidget = nullptr;
 }
 
 /*------------------------------------------------------------------------------
@@ -96,18 +81,36 @@ void SettingsView::changeCenterWidget(bool event)
     _activeButton = static_cast<QToolButton*>(QObject::sender());
     _activeButton->setChecked(true);
 
+    /* Remove all views from the stack if something is available */
+    while(_stackedWidget->count() > 0)
+    {
+        pop();
+    }
+
     if(sender.compare("General") == 0) {
-        _stackedWidget->setCurrentIndex(0);
+        QTextBrowser *widget = new QTextBrowser;
+        widget->setText(tr("General"));
+        push(widget);
     }else if(sender.compare("Network") == 0) {
-        _stackedWidget->setCurrentIndex(1);
+        QTextBrowser *widget = new QTextBrowser;
+        widget->setText(tr("Network"));
+        push(widget);
     }else if(sender.compare("Slideshow") == 0) {
-        _stackedWidget->setCurrentIndex(2);
+        QTextBrowser *widget = new QTextBrowser;
+        widget->setText(tr("Slideshow"));
+        push(widget);
     }else if(sender.compare("Privacy") == 0) {
-        _stackedWidget->setCurrentIndex(3);
+        QTextBrowser *widget = new QTextBrowser;
+        widget->setText(tr("Privacy"));
+        push(widget);
     }else if(sender.compare("Advanced") == 0) {
-        _stackedWidget->setCurrentIndex(4);
+        QTextBrowser *widget = new QTextBrowser;
+        widget->setText(tr("Advanced"));
+        push(widget);
     }else if(sender.compare("Storage") == 0) {
-        _stackedWidget->setCurrentIndex(5);
+        QTextBrowser *widget = new QTextBrowser;
+        widget->setText(tr("Storage"));
+        push(widget);
     }
 }
 
@@ -135,7 +138,30 @@ QToolButton * SettingsView::createSidebarButton(const QString& iconPath, const Q
     btn->setFixedSize(76, 76);
     btn->setObjectName(title);
     btn->setCheckable(true);
-    QObject::connect(btn, SIGNAL(clicked(bool)), this, SLOT(changeCenterWidget(bool)));
+    QObject::connect(btn, SIGNAL(clicked(bool)),
+                     this, SLOT(changeCenterWidget(bool)));
 
     return btn;
+}
+
+/**
+ * @brief Push the widget on the stack and set it active
+ *
+ * @param page Widget to push
+ */
+void SettingsView::push(QWidget *page)
+{
+    _stackedWidget->addWidget(page);
+    _stackedWidget->setCurrentWidget(page);
+}
+
+/**
+ * @brief Remove the current widget from the stack and switch to the previous
+ */
+void SettingsView::pop()
+{
+    QWidget * currentWidget = _stackedWidget->currentWidget();
+    _stackedWidget->removeWidget(currentWidget);
+
+    delete currentWidget; currentWidget = nullptr;
 }

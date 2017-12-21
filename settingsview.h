@@ -15,9 +15,11 @@ public:
     explicit SettingsView(QWidget *parent = 0);
     ~SettingsView();
 
+    void push(QWidget * page);
+    void pop();
+
 public slots:
     void changeCenterWidget(bool);
-
 
 private:
     QToolButton * createSidebarButton(const QString& iconPath, const QString& title);

@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = settingsview
 TEMPLATE = app
 
+CONFIG += c++14
 
 SOURCES += main.cpp\
     borderlayout.cpp \
