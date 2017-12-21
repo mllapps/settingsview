@@ -7,9 +7,8 @@
  * Passing on and copying of this document, use and communication of its
  * contents is not permitted without prior written authorization.
  *
- * @brief
+ * @brief Settings view sidebar item implementation
  */
-
 #include "sidebaritem.h"
 
 #include <QLayout>

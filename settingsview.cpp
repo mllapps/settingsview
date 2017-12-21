@@ -1,3 +1,12 @@
+/**
+ * @file settingsview.cpp
+ * @date 2016/06/07
+ * @author fl0mll
+ *
+ * This document contains proprietary information belonging to mllapps.com
+ * Passing on and copying of this document, use and communication of its
+ * contents is not permitted without prior written authorization.
+ */
 #include <QTextBrowser>
 #include <QLabel>
 #include <QPushButton>
@@ -8,6 +17,8 @@
 
 #include "settingsview.h"
 #include "borderlayout.h"
+
+#include "ui_generalview.h"
 
 /*------------------------------------------------------------------------------
  * CTOR / DTOR
@@ -88,8 +99,9 @@ void SettingsView::changeCenterWidget(bool event)
     }
 
     if(sender.compare("General") == 0) {
-        QTextBrowser *widget = new QTextBrowser;
-        widget->setText(tr("General"));
+        QWidget *widget = new QWidget;
+        Ui::GeneralView ui;
+        ui.setupUi(widget);
         push(widget);
     }else if(sender.compare("Network") == 0) {
         QTextBrowser *widget = new QTextBrowser;

@@ -16,14 +16,17 @@ CONFIG += c++14
 SOURCES += main.cpp\
     borderlayout.cpp \
     sidebaritem.cpp \
-    settingsview.cpp
+    settingsview.cpp \
+    generalview.cpp
 
 HEADERS  += \
     borderlayout.h \
     sidebaritem.h \
-    settingsview.h
+    settingsview.h \
+    generalview.h
 
-FORMS    += mainwindow.ui
+FORMS    += \
+    generalview.ui
 
 RESOURCES += \
     default.qrc
