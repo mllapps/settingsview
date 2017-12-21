@@ -18,7 +18,8 @@
  * @param parent
  */
 SettingsView::SettingsView(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    _activeButton(nullptr)
 {
     // Create a layout for the sidebar
     QVBoxLayout * sidebarLayout = new QVBoxLayout();
@@ -85,9 +86,15 @@ SettingsView::~SettingsView()
  */
 void SettingsView::changeCenterWidget(bool event)
 {
+    Q_UNUSED(event);
     QString sender = QObject::sender()->objectName();
 
-    static_cast<QToolButton*>(QObject::sender())->setFocus();
+    if(_activeButton != nullptr) {
+        _activeButton->setChecked(false);
+    }
+
+    _activeButton = static_cast<QToolButton*>(QObject::sender());
+    _activeButton->setChecked(true);
 
     if(sender.compare("General") == 0) {
         _stackedWidget->setCurrentIndex(0);
@@ -127,6 +134,7 @@ QToolButton * SettingsView::createSidebarButton(const QString& iconPath, const Q
     btn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     btn->setFixedSize(76, 76);
     btn->setObjectName(title);
+    btn->setCheckable(true);
     QObject::connect(btn, SIGNAL(clicked(bool)), this, SLOT(changeCenterWidget(bool)));
 
     return btn;
